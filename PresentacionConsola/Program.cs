@@ -13,7 +13,9 @@ namespace TiendaVirtual.PresentacionConsola
         {
             Console.WriteLine("Prueba base de datos");
 
-            IDaoUsuario daoUsuario = new DaoUsuarioSqlServer();
+            IDaoUsuario daoUsuario = new DaoUsuarioSqlServer(
+                @"Data Source=PC-JAVIERLETE\SQLEXPRESS12;
+                    Initial Catalog=tiendavirtual;Integrated Security=True");
 
             try
             {

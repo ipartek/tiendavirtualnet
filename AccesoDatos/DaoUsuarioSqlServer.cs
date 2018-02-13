@@ -7,8 +7,14 @@ namespace TiendaVirtual.AccesoDatos
 {
     public class DaoUsuarioSqlServer : IDaoUsuario
     {
-        private string connectionString = @"Data Source=PC-JAVIERLETE\SQLEXPRESS12;
-                    Initial Catalog=tiendavirtual;Integrated Security=True";
+        private const string SQL_INSERT = "INSERT INTO usuarios (Nick, Contra) VALUES (@Nick, @Pass)";
+
+        private string connectionString;
+
+        public DaoUsuarioSqlServer(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
 
         public void Alta(IUsuario usuario)
         {
@@ -21,8 +27,7 @@ namespace TiendaVirtual.AccesoDatos
 
                     IDbCommand comInsert = con.CreateCommand();
 
-                    comInsert.CommandText =
-                        "INSERT INTO usuarios (Nick, Contra) VALUES (@Nick, @Pass)";
+                    comInsert.CommandText = SQL_INSERT;
 
                     IDbDataParameter parNick = comInsert.CreateParameter();
                     parNick.ParameterName = "Nick";
