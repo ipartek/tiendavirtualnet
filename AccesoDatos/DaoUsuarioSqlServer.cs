@@ -12,36 +12,43 @@ namespace TiendaVirtual.AccesoDatos
 
         public void Alta(IUsuario usuario)
         {
-            using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+            try
             {
-                //"Zona declarativa"
-                con.Open();
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
 
-                IDbCommand comInsert = con.CreateCommand();
+                    IDbCommand comInsert = con.CreateCommand();
 
-                comInsert.CommandText = 
-                    "INSERT INTO usuarios (Nick, Password) VALUES (@Nick, @Password)";
+                    comInsert.CommandText =
+                        "INSERT INTO usuarios (Nick, Contra) VALUES (@Nick, @Pass)";
 
-                IDbDataParameter parNick = comInsert.CreateParameter();
-                parNick.ParameterName = "Nick";
-                parNick.DbType = DbType.String;
+                    IDbDataParameter parNick = comInsert.CreateParameter();
+                    parNick.ParameterName = "Nick";
+                    parNick.DbType = DbType.String;
 
-                IDbDataParameter parPassword = comInsert.CreateParameter();
-                parPassword.ParameterName = "Password";
-                parPassword.DbType = DbType.String;
+                    IDbDataParameter parPassword = comInsert.CreateParameter();
+                    parPassword.ParameterName = "Pass";
+                    parPassword.DbType = DbType.String;
 
-                comInsert.Parameters.Add(parNick);
-                comInsert.Parameters.Add(parPassword);
+                    comInsert.Parameters.Add(parNick);
+                    comInsert.Parameters.Add(parPassword);
 
-                //"Zona concreta"
-                parNick.Value = usuario.Nick;
-                parPassword.Value = usuario.Password;
+                    //"Zona concreta"
+                    parNick.Value = usuario.Nick;
+                    parPassword.Value = usuario.Password;
 
-                int numRegistrosModificados = comInsert.ExecuteNonQuery();
+                    int numRegistrosModificados = comInsert.ExecuteNonQuery();
 
-                if (numRegistrosModificados != 1)
-                    throw new AccesoDatosException("Número de registros insertados: " + 
-                        numRegistrosModificados);
+                    if (numRegistrosModificados != 1)
+                        throw new AccesoDatosException("Número de registros insertados: " +
+                            numRegistrosModificados);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido realizar el alta", e);
             }
         }
 

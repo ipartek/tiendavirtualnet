@@ -3,12 +3,31 @@ using System.Text;
 using TiendaVirtual.Entidades;
 using TiendaVirtual.LogicaNegocio;
 
+using TiendaVirtual.AccesoDatos;
+
 namespace TiendaVirtual.PresentacionConsola
 {
     class Program
     {
+        static void Main()
+        {
+            Console.WriteLine("Prueba base de datos");
+
+            IDaoUsuario daoUsuario = new DaoUsuarioSqlServer();
+
+            try
+            {
+                daoUsuario.Alta(new Usuario(0, "javier", "contra"));
+            }
+            catch(AccesoDatosException ade)
+            {
+                Console.WriteLine(ade.Message);
+            }
+        }
+
+
         private static ILogicaNegocio ln = new LogicaNegocio.LogicaNegocio();
-        static void Main(string[] args)
+        static void MainAnterior(string[] args)
         {
             string e = Encoding.Default.GetString(new byte[] { 128 });
 

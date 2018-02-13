@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace TiendaVirtual.AccesoDatos
 {
     [Serializable]
-    internal class AccesoDatosException : Exception
+    public class AccesoDatosException : Exception
     {
         public AccesoDatosException()
         {
