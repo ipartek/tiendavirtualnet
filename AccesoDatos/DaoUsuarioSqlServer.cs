@@ -59,12 +59,42 @@ namespace TiendaVirtual.AccesoDatos
 
         public void Baja(IUsuario usuario)
         {
-            throw new NotImplementedException();
+            Baja(usuario.Id);
         }
 
         public void Baja(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comDelete = con.CreateCommand();
+
+                    comDelete.CommandText = "DELETE FROM usuarios WHERE Id=@Id";
+
+                    IDbDataParameter parId = comDelete.CreateParameter();
+                    parId.ParameterName = "Id";
+                    parId.DbType = DbType.Int32;
+
+                    comDelete.Parameters.Add(parId);
+
+                    //"Zona concreta"
+                    parId.Value = id;
+
+                    int numRegistrosBorrados = comDelete.ExecuteNonQuery();
+
+                    if (numRegistrosBorrados != 1)
+                        throw new AccesoDatosException("Número de registros borrados: " +
+                            numRegistrosBorrados);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido realizar el borrado", e);
+            }
         }
 
         public IUsuario BuscarPorId(int id)

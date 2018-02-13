@@ -19,11 +19,14 @@ namespace TiendaVirtual.PresentacionConsola
 
             try
             {
-                daoUsuario.Alta(new Usuario(0, "javier", "contra"));
+                //daoUsuario.Alta(new Usuario(0, "javier", "contra"));
+                daoUsuario.Baja(2);
             }
             catch(AccesoDatosException ade)
             {
                 Console.WriteLine(ade.Message);
+                if (ade.InnerException != null)
+                    Console.WriteLine(ade.InnerException.Message);
             }
         }
 
