@@ -11,6 +11,9 @@ namespace TiendaVirtual.AccesoDatos
         private const string SQL_DELETE = "DELETE FROM usuarios WHERE Id=@Id";
         private const string SQL_UPDATE = "UPDATE usuarios SET Nick=@Nick,Contra=@Pass WHERE Id=@Id";
         private const string SQL_SELECT = "SELECT Id, Nick, Contra FROM usuarios";
+        private const string SQL_SELECT_ID = "SELECT Id, Nick, Contra FROM usuarios WHERE Id=@Id";
+        private const string SQL_SELECT_NICK = "SELECT Id, Nick, Contra FROM usuarios WHERE Nick=@Nick";
+
 
         private string connectionString;
 
@@ -102,12 +105,92 @@ namespace TiendaVirtual.AccesoDatos
 
         public IUsuario BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comSelectId = con.CreateCommand();
+
+                    comSelectId.CommandText = SQL_SELECT_ID;
+
+                    IDbDataParameter parId = comSelectId.CreateParameter();
+                    parId.ParameterName = "Id";
+                    parId.DbType = DbType.Int32;
+
+                    comSelectId.Parameters.Add(parId);
+
+                    //"Zona concreta"
+
+                    parId.Value = id;
+
+                    IDataReader dr = comSelectId.ExecuteReader();
+
+                    if (dr.Read())
+                    {
+                        IUsuario usuario = new Usuario();
+
+                        usuario.Id = dr.GetInt32(0);
+                        usuario.Nick = dr.GetString(1);
+                        usuario.Password = dr.GetString(2);
+
+                        return usuario;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido buscar ese usuario por ese id", e);
+            }
         }
 
         public IUsuario BuscarPorNick(string nick)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comSelectId = con.CreateCommand();
+
+                    comSelectId.CommandText = SQL_SELECT_NICK;
+
+                    IDbDataParameter parNick = comSelectId.CreateParameter();
+                    parNick.ParameterName = "Nick";
+                    parNick.DbType = DbType.String;
+
+                    comSelectId.Parameters.Add(parNick);
+
+                    //"Zona concreta"
+
+                    parNick.Value = nick;
+
+                    IDataReader dr = comSelectId.ExecuteReader();
+
+                    if (dr.Read())  
+                    {
+                        IUsuario usuario = new Usuario();
+
+                        usuario.Id = dr.GetInt32(0);
+                        usuario.Nick = dr.GetString(1);
+                        usuario.Password = dr.GetString(2);
+
+                        return usuario;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido buscar ese usuario por ese id", e);
+            }
         }
 
         public IEnumerable<IUsuario> BuscarTodos()

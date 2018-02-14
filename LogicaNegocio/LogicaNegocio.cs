@@ -8,7 +8,20 @@ namespace TiendaVirtual.LogicaNegocio
 {
     public class LogicaNegocio : ILogicaNegocio
     {
-        private IDaoUsuario daoUsuario = new DaoUsuarioColecciones();
+        private string cadenaConexion;
+
+        public LogicaNegocio()
+        {
+
+        }
+
+        public LogicaNegocio(string cadenaConexion)
+        {
+            this.cadenaConexion = cadenaConexion;
+            daoUsuario = new DaoUsuarioSqlServer(cadenaConexion);
+        }
+
+        private IDaoUsuario daoUsuario; //new DaoUsuarioColecciones();
         private IDaoProducto daoProducto = new DaoProductoColecciones();
         private IDaoFactura daoFactura = new DaoFacturaColecciones();
 

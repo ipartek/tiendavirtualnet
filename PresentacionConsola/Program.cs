@@ -11,6 +11,19 @@ namespace TiendaVirtual.PresentacionConsola
     {
         static void Main()
         {
+            string cadenaConexion =
+                System.Configuration.ConfigurationManager.
+                ConnectionStrings["TiendaVirtual"].
+                ConnectionString;
+
+            ILogicaNegocio ln = new LogicaNegocio.LogicaNegocio(cadenaConexion);
+
+            IUsuario usuario = ln.ValidarUsuarioYDevolverUsuario("javier", "contr");
+
+            Console.WriteLine(usuario);
+        }
+        static void MainDaoSqlUsuario()
+        {
             Console.WriteLine("Prueba base de datos");
 
             string cadenaConexion = 
@@ -29,6 +42,10 @@ namespace TiendaVirtual.PresentacionConsola
 
                 foreach (IUsuario usuario in daoUsuario.BuscarTodos())
                     Console.WriteLine(usuario);
+
+                Console.WriteLine(daoUsuario.BuscarPorId(3));
+
+                Console.WriteLine(daoUsuario.BuscarPorNick("javier"));
             }
             catch(AccesoDatosException ade)
             {
