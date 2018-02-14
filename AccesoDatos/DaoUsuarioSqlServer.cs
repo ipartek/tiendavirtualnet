@@ -8,6 +8,8 @@ namespace TiendaVirtual.AccesoDatos
     public class DaoUsuarioSqlServer : IDaoUsuario
     {
         private const string SQL_INSERT = "INSERT INTO usuarios (Nick, Contra) VALUES (@Nick, @Pass)";
+        private const string SQL_DELETE = "DELETE FROM usuarios WHERE Id=@Id";
+        private const string SQL_UPDATE = "UPDATE usuarios SET Nick=@Nick,Contra=@Pass WHERE Id=@Id";
 
         private string connectionString;
 
@@ -44,11 +46,11 @@ namespace TiendaVirtual.AccesoDatos
                     parNick.Value = usuario.Nick;
                     parPassword.Value = usuario.Password;
 
-                    int numRegistrosModificados = comInsert.ExecuteNonQuery();
+                    int numRegistrosInsertados = comInsert.ExecuteNonQuery();
 
-                    if (numRegistrosModificados != 1)
+                    if (numRegistrosInsertados != 1)
                         throw new AccesoDatosException("Número de registros insertados: " +
-                            numRegistrosModificados);
+                            numRegistrosInsertados);
                 }
             }
             catch (Exception e)
@@ -73,7 +75,7 @@ namespace TiendaVirtual.AccesoDatos
 
                     IDbCommand comDelete = con.CreateCommand();
 
-                    comDelete.CommandText = "DELETE FROM usuarios WHERE Id=@Id";
+                    comDelete.CommandText = SQL_DELETE;
 
                     IDbDataParameter parId = comDelete.CreateParameter();
                     parId.ParameterName = "Id";
@@ -114,7 +116,49 @@ namespace TiendaVirtual.AccesoDatos
 
         public void Modificacion(IUsuario usuario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comUpdate = con.CreateCommand();
+
+                    comUpdate.CommandText = SQL_UPDATE;
+
+                    IDbDataParameter parId = comUpdate.CreateParameter();
+                    parId.ParameterName = "Id";
+                    parId.DbType = DbType.Int32;
+
+                    IDbDataParameter parNick = comUpdate.CreateParameter();
+                    parNick.ParameterName = "Nick";
+                    parNick.DbType = DbType.String;
+
+                    IDbDataParameter parPassword = comUpdate.CreateParameter();
+                    parPassword.ParameterName = "Pass";
+                    parPassword.DbType = DbType.String;
+
+                    comUpdate.Parameters.Add(parId);
+                    comUpdate.Parameters.Add(parNick);
+                    comUpdate.Parameters.Add(parPassword);
+
+                    //"Zona concreta"
+                    parId.Value = usuario.Id;
+                    parNick.Value = usuario.Nick;
+                    parPassword.Value = usuario.Password;
+
+                    int numRegistrosModificados = comUpdate.ExecuteNonQuery();
+
+                    if (numRegistrosModificados != 1)
+                        throw new AccesoDatosException("Número de registros modificados: " +
+                            numRegistrosModificados);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido realizar la modificación", e);
+            }
         }
     }
 }

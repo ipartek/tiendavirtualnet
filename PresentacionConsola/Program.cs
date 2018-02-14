@@ -20,7 +20,8 @@ namespace TiendaVirtual.PresentacionConsola
             try
             {
                 //daoUsuario.Alta(new Usuario(0, "javier", "contra"));
-                daoUsuario.Baja(2);
+                //daoUsuario.Baja(2);
+                daoUsuario.Modificacion(new Usuario(3, "Modificado", "Modificadez"));
             }
             catch(AccesoDatosException ade)
             {
