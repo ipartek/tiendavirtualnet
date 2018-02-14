@@ -10,6 +10,7 @@ namespace TiendaVirtual.AccesoDatos
         private const string SQL_INSERT = "INSERT INTO usuarios (Nick, Contra) VALUES (@Nick, @Pass)";
         private const string SQL_DELETE = "DELETE FROM usuarios WHERE Id=@Id";
         private const string SQL_UPDATE = "UPDATE usuarios SET Nick=@Nick,Contra=@Pass WHERE Id=@Id";
+        private const string SQL_SELECT = "SELECT Id, Nick, Contra FROM usuarios";
 
         private string connectionString;
 
@@ -111,7 +112,42 @@ namespace TiendaVirtual.AccesoDatos
 
         public IEnumerable<IUsuario> BuscarTodos()
         {
-            throw new NotImplementedException();
+            List<IUsuario> usuarios = new List<IUsuario>();
+
+            try
+            {
+                using (IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString))
+                {
+                    //"Zona declarativa"
+                    con.Open();
+
+                    IDbCommand comSelect = con.CreateCommand();
+
+                    comSelect.CommandText = SQL_SELECT;
+
+                    //"Zona concreta"
+                    IDataReader dr = comSelect.ExecuteReader();
+
+                    IUsuario usuario;
+
+                    while (dr.Read())
+                    {
+                        usuario = new Usuario();
+
+                        usuario.Id = dr.GetInt32(0);
+                        usuario.Nick = dr.GetString(1);
+                        usuario.Password = dr.GetString(2);
+
+                        usuarios.Add(usuario);
+                    }
+
+                    return usuarios;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido buscar todos los usuarios", e);
+            }
         }
 
         public void Modificacion(IUsuario usuario)

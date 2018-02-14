@@ -25,7 +25,10 @@ namespace TiendaVirtual.PresentacionConsola
             {
                 //daoUsuario.Alta(new Usuario(0, "javier", "contra"));
                 //daoUsuario.Baja(2);
-                daoUsuario.Modificacion(new Usuario(3, "Modificado", "Modificadez"));
+                daoUsuario.Modificacion(new Usuario(3, "M", "Modificadez"));
+
+                foreach (IUsuario usuario in daoUsuario.BuscarTodos())
+                    Console.WriteLine(usuario);
             }
             catch(AccesoDatosException ade)
             {
