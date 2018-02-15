@@ -18,9 +18,13 @@ namespace TiendaVirtual.PresentacionConsola
 
             ILogicaNegocio ln = new LogicaNegocio.LogicaNegocio(cadenaConexion);
 
-            IUsuario usuario = ln.ValidarUsuarioYDevolverUsuario("javier", "contr");
+            IUsuario usuario = ln.ValidarUsuarioYDevolverUsuario("javier", "contra");
 
             Console.WriteLine(usuario);
+
+            ln.ModificarUsuario(new Usuario(3, "asdf", "fghj"));
+
+            Console.WriteLine(ln.BuscarUsuarioPorId(3));
         }
         static void MainDaoSqlUsuario()
         {
