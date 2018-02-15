@@ -8,22 +8,26 @@ namespace TiendaVirtual.LogicaNegocio
 {
     public class LogicaNegocio : ILogicaNegocio
     {
-        private string cadenaConexion;
+        private string tipo, cadenaConexion, usuario, password;
 
-        public LogicaNegocio()
+        public LogicaNegocio(string tipo = "coleccion", string cadenaConexion = null, string usuario = null, string password = null)
         {
-
-        }
-
-        public LogicaNegocio(string cadenaConexion)
-        {
+            this.tipo = tipo;
             this.cadenaConexion = cadenaConexion;
-            daoUsuario = new DaoUsuarioSqlServer(cadenaConexion);
+            this.usuario = usuario;
+            this.password = password;
+
+            DaoFactory daoFactory = new DaoFactory(tipo, cadenaConexion, usuario, password);
+
+            daoUsuario = daoFactory.GetDaoUsuario();
+            daoProducto = daoFactory.GetDaoProducto();
+            daoFactura = daoFactory.GetDaoFactura();
         }
+
 
         private IDaoUsuario daoUsuario; //new DaoUsuarioColecciones();
-        private IDaoProducto daoProducto = new DaoProductoColecciones();
-        private IDaoFactura daoFactura = new DaoFacturaColecciones();
+        private IDaoProducto daoProducto; //= new DaoProductoColecciones();
+        private IDaoFactura daoFactura; //= new DaoFacturaColecciones();
 
         public void AgregarProductoACarrito(IProducto producto, ICarrito carrito)
         {

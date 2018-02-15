@@ -16,15 +16,19 @@ namespace TiendaVirtual.PresentacionConsola
                 ConnectionStrings["TiendaVirtual"].
                 ConnectionString;
 
-            ILogicaNegocio ln = new LogicaNegocio.LogicaNegocio(cadenaConexion);
+            string tipo = System.Configuration.ConfigurationManager.AppSettings["motorDao"];
+
+            ILogicaNegocio ln = new LogicaNegocio.LogicaNegocio(tipo, cadenaConexion);
 
             IUsuario usuario = ln.ValidarUsuarioYDevolverUsuario("javier", "contra");
 
             Console.WriteLine(usuario);
 
-            ln.ModificarUsuario(new Usuario(3, "Modificado " + DateTime.Now.Minute, "Modificadez " + DateTime.Now.Minute));
+            Console.WriteLine(ln.BuscarUsuarioPorId(2));
 
-            Console.WriteLine(ln.BuscarUsuarioPorId(3));
+            ln.ModificarUsuario(new Usuario(2, "Modificado " + DateTime.Now.Minute, "Modificadez " + DateTime.Now.Minute));
+
+            Console.WriteLine(ln.BuscarUsuarioPorId(2));
         }
         static void MainDaoSqlUsuario()
         {

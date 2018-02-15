@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatosException.cs" />
+    <Compile Include="DaoFactory.cs" />
     <Compile Include="DaoFacturaColecciones.cs" />
     <Compile Include="DaoProductoColecciones.cs" />
     <Compile Include="DaoUsuarioColecciones.cs" />
