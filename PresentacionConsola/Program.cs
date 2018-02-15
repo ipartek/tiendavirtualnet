@@ -22,7 +22,7 @@ namespace TiendaVirtual.PresentacionConsola
 
             Console.WriteLine(usuario);
 
-            ln.ModificarUsuario(new Usuario(3, "asdf", "fghj"));
+            ln.ModificarUsuario(new Usuario(3, "Modificado " + DateTime.Now.Minute, "Modificadez " + DateTime.Now.Minute));
 
             Console.WriteLine(ln.BuscarUsuarioPorId(3));
         }
