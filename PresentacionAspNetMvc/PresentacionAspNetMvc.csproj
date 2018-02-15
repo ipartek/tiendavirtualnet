@@ -163,6 +163,10 @@
     <Content Include="App_Data\Prueba_log.ldf">
       <DependentUpon>Prueba.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\TiendaVirtual.mdf" />
+    <Content Include="App_Data\TiendaVirtual_log.ldf">
+      <DependentUpon>TiendaVirtual.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\tienda.css" />
