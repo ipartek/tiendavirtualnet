@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using TiendaVirtual.AccesoDatos.TiendaVirtualDataSetTableAdapters;
 using TiendaVirtual.Entidades;
+using static TiendaVirtual.AccesoDatos.TiendaVirtualDataSet;
 
 namespace TiendaVirtual.AccesoDatos
 {
@@ -20,6 +22,11 @@ namespace TiendaVirtual.AccesoDatos
         public DaoUsuarioSqlServer(string connectionString)
         {
             this.connectionString = connectionString;
+        }
+
+        public DaoUsuarioSqlServer()
+        {
+            this.connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\javierlete\DOTNET\VSPROJECTS\TiendaVirtual\PresentacionConsola\TiendaVirtual.mdf;Integrated Security=True";
         }
 
         public void Alta(IUsuario usuario)
@@ -173,7 +180,7 @@ namespace TiendaVirtual.AccesoDatos
 
                     IDataReader dr = comSelectId.ExecuteReader();
 
-                    if (dr.Read())  
+                    if (dr.Read())
                     {
                         IUsuario usuario = new Usuario();
 
@@ -191,6 +198,60 @@ namespace TiendaVirtual.AccesoDatos
             {
                 throw new AccesoDatosException("No se ha podido buscar ese usuario por ese id", e);
             }
+        }
+
+        public usuariosDataTable BuscarTodosEnDataTableTipado()
+        {
+            usuariosDataTable dt = null;
+
+            try
+            {
+                usuariosTableAdapter da = new usuariosTableAdapter();
+
+                //"Zona concreta"
+                da.Fill(dt);
+
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido buscar todos los usuarios", e);
+            }
+
+        }
+
+        public DataTable BuscarTodosEnDataTable()
+        {
+            DataSet ds = new DataSet();
+            DataTable dt = null;
+
+            try
+            {
+                IDbConnection con = new System.Data.SqlClient.SqlConnection(connectionString);
+
+                //"Zona declarativa"
+                IDbDataAdapter da = new System.Data.SqlClient.SqlDataAdapter();
+
+                IDbCommand comSelect = con.CreateCommand();
+
+                comSelect.CommandText = SQL_SELECT;
+
+                da.SelectCommand = comSelect;
+
+                //"Zona concreta"
+                da.Fill(ds);
+
+                dt = ds.Tables[0];
+
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw new AccesoDatosException("No se ha podido buscar todos los usuarios", e);
+            }
+
         }
 
         public IEnumerable<IUsuario> BuscarTodos()

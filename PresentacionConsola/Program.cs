@@ -4,12 +4,39 @@ using TiendaVirtual.Entidades;
 using TiendaVirtual.LogicaNegocio;
 
 using TiendaVirtual.AccesoDatos;
+using System.Data;
+using static TiendaVirtual.AccesoDatos.TiendaVirtualDataSet;
 
 namespace TiendaVirtual.PresentacionConsola
 {
     class Program
     {
-        static void Main()
+        static void MainDataSetTipado()
+        {
+            DaoUsuarioSqlServer daoUsuario = new DaoUsuarioSqlServer(null);
+
+            usuariosDataTable dt = daoUsuario.BuscarTodosEnDataTableTipado();
+
+            foreach (usuariosRow dr in dt.Rows)
+                Console.WriteLine($"{dr.Id}, {dr.Nick}, {dr.Contra}");
+        }
+
+        static void MainDataSet()
+        {
+            string cadenaConexion =
+                System.Configuration.ConfigurationManager.
+                ConnectionStrings["TiendaVirtual"].
+                ConnectionString;
+
+            DaoUsuarioSqlServer daoUsuario = new DaoUsuarioSqlServer(cadenaConexion);
+
+            DataTable dt = daoUsuario.BuscarTodosEnDataTable();
+
+            foreach (DataRow dr in dt.Rows)
+                Console.WriteLine($"{dr["Id"]}, {dr["Nick"]}, {dr["Contra"]}");
+        }
+
+        static void MainConConfiguracion()
         {
             string cadenaConexion =
                 System.Configuration.ConfigurationManager.

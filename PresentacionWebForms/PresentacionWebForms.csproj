@@ -75,6 +75,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DefaultBasico.aspx" />
     <Content Include="DemoObjectDataSource.aspx" />
+    <Content Include="EjemploDataSet.aspx" />
     <Content Include="Factura.aspx" />
     <Content Include="FichaAnterior.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -83,6 +84,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="admin\Web.config" />
     <Content Include="admin\Backend.Master" />
+    <Content Include="GridViewUsuarios.aspx" />
     <Content Include="WebForm1.aspx" />
     <None Include="packages.config" />
     <Content Include="admin\backend.html" />
@@ -181,6 +183,13 @@
     <Compile Include="DemoObjectDataSource.aspx.designer.cs">
       <DependentUpon>DemoObjectDataSource.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EjemploDataSet.aspx.cs">
+      <DependentUpon>EjemploDataSet.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EjemploDataSet.aspx.designer.cs">
+      <DependentUpon>EjemploDataSet.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Factura.aspx.cs">
       <DependentUpon>Factura.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -205,6 +214,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GridViewUsuarios.aspx.cs">
+      <DependentUpon>GridViewUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GridViewUsuarios.aspx.designer.cs">
+      <DependentUpon>GridViewUsuarios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TiendaVirtual.Master.cs">
       <DependentUpon>TiendaVirtual.Master</DependentUpon>
@@ -222,6 +238,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AccesoDatos\AccesoDatos.csproj">
+      <Project>{7B1A4A8E-9622-448C-A05F-BED2D55022B6}</Project>
+      <Name>AccesoDatos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entidades\Entidades.csproj">
       <Project>{37b183ae-aa7d-4d9e-b735-84e7798f899c}</Project>
       <Name>Entidades</Name>
