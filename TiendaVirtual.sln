@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "Entidades\Entidades.csproj", "{37B183AE-AA7D-4D9E-B735-84E7798F899C}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionWebForms", "PresentacionWebForms\PresentacionWebForms.csproj", "{83287881-8E5D-4D0A-B573-F563B03BE571}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionAspNetMvc", "PresentacionAspNetMvc\PresentacionAspNetMvc.csproj", "{5EF5215D-58B3-46F9-BA95-FF573D1C0AA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentacionWebAPI", "PresentacionWebAPI\PresentacionWebAPI.csproj", "{0C3844FF-EF98-438C-985E-BCAE8295163E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{5EF5215D-58B3-46F9-BA95-FF573D1C0AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EF5215D-58B3-46F9-BA95-FF573D1C0AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EF5215D-58B3-46F9-BA95-FF573D1C0AA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C3844FF-EF98-438C-985E-BCAE8295163E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3844FF-EF98-438C-985E-BCAE8295163E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3844FF-EF98-438C-985E-BCAE8295163E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3844FF-EF98-438C-985E-BCAE8295163E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
