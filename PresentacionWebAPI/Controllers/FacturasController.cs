@@ -49,6 +49,7 @@ namespace PresentacionWebAPI.Controllers
 
             IProducto producto;
             int cantidad;
+
             for (int i = 0; i < carritoDTO.IdsProductos.Length; i++) {
                 producto = ln.BuscarProductoPorId(carritoDTO.IdsProductos[i]);
                 cantidad = carritoDTO.CantidadesProductos[i];

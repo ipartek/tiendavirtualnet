@@ -1,4 +1,39 @@
+'use strict';
+
+var carritoUsuario;
+
 $(function () {
+    carritoUsuario = cargarCarrito();
+
+    if (!carritoUsuario) {
+        carritoUsuario = {
+            usuario: {
+                Id: 1,
+                Nick: 'Javier',
+                Password: ''
+            },
+            productos: [{
+                producto: {
+                    Id: 1,
+                    Nombre: 'Producto1',
+                    Precio: 10
+                },
+                cantidad: 5
+            },
+            {
+                producto: {
+                    Id: 2,
+                    Nombre: 'Producto2',
+                    Precio: 20
+                },
+                cantidad: 3
+            }
+            ]
+        };
+
+        guardarCarrito(carrito);
+    }
+
     $('#ficha, #carrito, #factura, #login').hide();
 
     //Cambios de pantalla
@@ -10,6 +45,19 @@ $(function () {
 
     $('#frmCarrito').submit(function (e) {
         e.preventDefault();
+
+        var linea = {
+            producto: {
+                Id: 100,
+                Nombre: 'Producto100',
+                Precio: 1000
+            },
+            cantidad: 100
+        };
+
+        carritoUsuario.productos.push(linea);
+
+        guardarCarrito(carritoUsuario);
 
         $('#ficha').hide();
         $('#carrito').show();
@@ -35,3 +83,11 @@ $(function () {
         //$('#cantidad').val($('#cantidad').val() + 1);
     });
 });
+
+function guardarCarrito(carrito) {
+    sessionStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+function cargarCarrito() {
+    return JSON.parse(sessionStorage.getItem('carrito'));
+}
