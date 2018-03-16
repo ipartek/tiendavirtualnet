@@ -25,7 +25,7 @@ namespace PresentacionWebAPI.Controllers
         }
 
         // POST: api/Productos
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Producto value)
         {
         }
 
