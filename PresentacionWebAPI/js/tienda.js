@@ -5,7 +5,7 @@ var carritoUsuario;
 $(function () {
     carritoUsuario = cargarCarrito();
 
-    if (!carritoUsuario.productos) {
+    if (!carritoUsuario) {
         carritoUsuario = {
             usuario: {
                 Id: 1,
@@ -53,7 +53,7 @@ $(function () {
 
             var linea = {
                 producto: producto,
-                cantidad: cantidad
+                cantidad: parseInt(cantidad)
             };
 
             carritoUsuario = cargarCarrito();
@@ -68,6 +68,32 @@ $(function () {
 
     $('#btnFactura').click(function (e) {
         e.preventDefault();
+
+        var carritoDTO = {};
+        var carrito = cargarCarrito();
+
+        carritoDTO.IdUsuario = carrito.usuario.Id;
+        carritoDTO.IdsProductos = [];
+        carritoDTO.CantidadesProductos = [];
+
+        $.each(carrito.productos, function (clave, linea) {
+            carritoDTO.IdsProductos.push(linea.producto.Id);
+            carritoDTO.CantidadesProductos.push(linea.cantidad);
+        });
+
+        console.log(carritoDTO);
+
+        $.ajax({
+            url: 'api/Facturas',
+            method: 'POST',
+            data: JSON.stringify(carritoDTO),
+            dataType: 'json',
+            contentType: 'application/json'
+        }).done(function (factura) {
+            console.log(factura);
+        }).fail(function () {
+            alert('Ha habido un error al crear la factura en el servidor');
+        });
 
         $('#carrito').hide();
         $('#factura').show();
