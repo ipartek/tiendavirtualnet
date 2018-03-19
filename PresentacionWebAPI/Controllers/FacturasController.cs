@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
 using TiendaVirtual.Entidades;
@@ -14,7 +15,7 @@ namespace PresentacionWebAPI.Controllers
 {
     public class FacturasController : ApiController
     {
-        private static LogicaNegocio ln = new LogicaNegocio();
+        private static ILogicaNegocio ln = (ILogicaNegocio)HttpContext.Current.Application["logicaNegocio"];
 
         //// GET: api/Facturas
         //public IEnumerable<IFactura> Get()

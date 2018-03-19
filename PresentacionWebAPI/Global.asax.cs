@@ -12,6 +12,15 @@ namespace PresentacionWebAPI
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            Application["logicaNegocio"] = new TiendaVirtual.LogicaNegocio.LogicaNegocio();
+        }
+    }
+
+    internal class LogicaNegocio
+    {
+        public LogicaNegocio()
+        {
         }
     }
 }

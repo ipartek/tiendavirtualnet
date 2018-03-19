@@ -5,7 +5,7 @@ var carritoUsuario;
 $(function () {
     carritoUsuario = cargarCarrito();
 
-    if (!carritoUsuario) {
+    if (!carritoUsuario.productos) {
         carritoUsuario = {
             usuario: {
                 Id: 1,
@@ -31,7 +31,7 @@ $(function () {
             ]
         };
 
-        guardarCarrito(carrito);
+        guardarCarrito(carritoUsuario);
     }
 
     $('#ficha, #carrito, #factura, #login').hide();
@@ -46,21 +46,24 @@ $(function () {
     $('#frmCarrito').submit(function (e) {
         e.preventDefault();
 
-        var linea = {
-            producto: {
-                Id: 100,
-                Nombre: 'Producto100',
-                Precio: 1000
-            },
-            cantidad: 100
-        };
+        var id = $('#frmCarrito input[name=id]').val();
+        var cantidad = $('#frmCarrito input[name=cantidad]').val();
 
-        carritoUsuario.productos.push(linea);
+        $.getJSON('api/Productos/' + id, function (producto) {
 
-        guardarCarrito(carritoUsuario);
+            var linea = {
+                producto: producto,
+                cantidad: cantidad
+            };
 
-        $('#ficha').hide();
-        $('#carrito').show();
+            carritoUsuario = cargarCarrito();
+            carritoUsuario.productos.push(linea);
+
+            guardarCarrito(carritoUsuario);
+
+            $('#ficha').hide();
+            $('#carrito').show();
+        });
     });
 
     $('#btnFactura').click(function (e) {
